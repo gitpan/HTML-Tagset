@@ -1,0 +1,9 @@
+Revision history for Perl extension HTML::TagSet
+                                        Time-stamp: "2000-08-21 01:39:24 MDT"
+
+2000-08-21  Sean M. Burke  sburke@cpan.org
+
+	* Release 3.01 -- first release.
+	Data tables copied from previous version of HTML::Element
+	and HTML::TreeBuilder, with some additions.
+
