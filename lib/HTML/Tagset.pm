@@ -1,6 +1,6 @@
 
 require 5;
-package HTML::Tagset;   # Time-stamp: "2000-10-20 19:35:06 MDT"
+package HTML::Tagset;   # Time-stamp: "2004-12-29 19:13:01 AST"
 use strict;
 use vars qw(
  $VERSION
@@ -14,7 +14,7 @@ use vars qw(
  %isCDATA_Parent
 );
 
-$VERSION = '3.03';
+$VERSION = '3.04';
 
 =head1 NAME
 

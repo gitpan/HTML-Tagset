@@ -1,6 +1,9 @@
 ChangeLog
-Tagset.pm
-MANIFEST
+lib/HTML/Tagset.pm
 Makefile.PL
-test.pl
+MANIFEST
+MANIFEST.SKIP
 README
+t/00_about_verbose.t
+t/01_old_junk.t
+META.yml                                 Module meta-data (added by MakeMaker)

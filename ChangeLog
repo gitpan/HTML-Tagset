@@ -1,6 +1,10 @@
-Revision history for Perl extension HTML::TagSet
-                                        Time-stamp: "2000-10-20 19:33:53 MDT"
+Revision history for Perl extension HTML::Tagset
+                                        Time-stamp: "2004-12-29 19:13:52 AST"
 
+2004-12-29  Sean M. Burke  sburke@cpan.org
+
+	* Realese 3.04 -- just a rebundling; no actual code changes
+	
 2000-10-20  Sean M. Burke  sburke@cpan.org
 
 	* Release 3.03
