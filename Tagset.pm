@@ -1,6 +1,6 @@
 
 require 5;
-package HTML::Tagset;   # Time-stamp: "2000-09-04 14:21:24 MDT"
+package HTML::Tagset;   # Time-stamp: "2000-10-20 19:35:06 MDT"
 use strict;
 use vars qw(
  $VERSION
@@ -14,7 +14,7 @@ use vars qw(
  %isCDATA_Parent
 );
 
-$VERSION = '3.02';
+$VERSION = '3.03';
 
 =head1 NAME
 
@@ -113,6 +113,7 @@ of attributes whose values can be links.
  'table'   => ['background'],
  'td'      => ['background'],
  'th'      => ['background'],
+ 'tr'      => ['background'],
  'xmp'     => ['href'],
 );
 
