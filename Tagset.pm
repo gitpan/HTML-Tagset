@@ -1,11 +1,12 @@
 
 require 5;
-package HTML::Tagset;   # Time-stamp: "2000-08-21 01:34:10 MDT"
+package HTML::Tagset;   # Time-stamp: "2000-09-04 14:21:24 MDT"
 use strict;
 use vars qw(
  $VERSION
  %emptyElement %optionalEndTag %linkElements %boolean_attr
  %isHeadElement %isBodyElement %isPhraseMarkup
+ %is_Possible_Strict_P_Content
  %isHeadOrBodyElement
  %isList %isTableElement %isFormElement
  %isKnown %canTighten
@@ -13,7 +14,7 @@ use vars qw(
  %isCDATA_Parent
 );
 
-$VERSION = '3.01';
+$VERSION = '3.02';
 
 =head1 NAME
 
@@ -182,6 +183,35 @@ This hashset contains all phrasal-level elements.
   spacer embed noembed
 );  # had: center, hr, table
 
+
+=item hashset %HTML::Tagset::is_Possible_Strict_P_Content
+
+This hashset contains all phrasal-level elements that be content of a
+P element, for a strict model of HTML.
+
+=cut
+
+%is_Possible_Strict_P_Content = (
+ %isPhraseMarkup,
+ %isFormElement,
+ map {; $_ => 1} qw( object script map )
+  # I've no idea why there's these latter exceptions.
+  # I'm just following the HTML4.01 DTD.
+);
+
+#from html4 strict:
+#<!ENTITY % fontstyle "TT | I | B | BIG | SMALL">
+#
+#<!ENTITY % phrase "EM | STRONG | DFN | CODE |
+#                   SAMP | KBD | VAR | CITE | ABBR | ACRONYM" >
+#
+#<!ENTITY % special
+#   "A | IMG | OBJECT | BR | SCRIPT | MAP | Q | SUB | SUP | SPAN | BDO">
+#
+#<!ENTITY % formctrl "INPUT | SELECT | TEXTAREA | LABEL | BUTTON">
+#
+#<!-- %inline; covers inline or "text-level" elements -->
+#<!ENTITY % inline "#PCDATA | %fontstyle; | %phrase; | %special; | %formctrl;">
 
 =item hashset %HTML::Tagset::isHeadElement
 

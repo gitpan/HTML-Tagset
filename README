@@ -1,5 +1,5 @@
 README for HTML::Tagset
-                                        Time-stamp: "2000-08-21 01:38:22 MDT"
+                                        Time-stamp: "2000-08-22 22:42:38 MDT"
 
 			  HTML::Tagset
 
@@ -62,3 +62,6 @@ COPYRIGHT
 
 Copyright 1999,2000 Sean M. Burke <sburke@cpan.org>; Copyright
 1995-2000 Gisle Aas; all rights reserved.
+
+This library is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.
