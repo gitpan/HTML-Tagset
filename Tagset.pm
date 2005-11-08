@@ -1,24 +1,20 @@
+package HTML::Tagset;
 
-require 5;
-package HTML::Tagset;   # Time-stamp: "2004-12-29 19:13:01 AST"
 use strict;
-use vars qw(
- $VERSION
- %emptyElement %optionalEndTag %linkElements %boolean_attr
- %isHeadElement %isBodyElement %isPhraseMarkup
- %is_Possible_Strict_P_Content
- %isHeadOrBodyElement
- %isList %isTableElement %isFormElement
- %isKnown %canTighten
- @p_closure_barriers
- %isCDATA_Parent
-);
-
-$VERSION = '3.04';
 
 =head1 NAME
 
 HTML::Tagset - data tables useful in parsing HTML
+
+=head1 VERSION
+
+Version 3.10
+
+=cut
+
+use vars qw( $VERSION );
+
+$VERSION = '3.10';
 
 =head1 SYNOPSIS
 
@@ -38,9 +34,25 @@ set -- the hash conveys that its keys are there, and the actual values
 associated with the keys are not significant.  (But what values are
 there, are always true.)
 
-=over
+=cut
 
-=item hashset %HTML::Tagset::emptyElement
+use vars qw(
+    $VERSION
+    %emptyElement %optionalEndTag %linkElements %boolean_attr
+    %isHeadElement %isBodyElement %isPhraseMarkup
+    %is_Possible_Strict_P_Content
+    %isHeadOrBodyElement
+    %isList %isTableElement %isFormElement
+    %isKnown %canTighten
+    @p_closure_barriers
+    %isCDATA_Parent
+);
+
+=head1 VARIABLES
+
+Note that none of these variables are exported.
+
+=head2 hashset %HTML::Tagset::emptyElement
 
 This hashset has as values the tag-names (GIs) of elements that cannot
 have content.  (For example, "base", "br", "hr".)  So
@@ -48,8 +60,6 @@ C<$HTML::Tagset::emptyElement{'hr'}> exists and is true.
 C<$HTML::Tagset::emptyElement{'dl'}> does not exist, and so is not true.
 
 =cut
-
-#==========================================================================
 
 %emptyElement   = map {; $_ => 1 } qw(base link meta isindex
                                      img br hr wbr
@@ -59,12 +69,10 @@ C<$HTML::Tagset::emptyElement{'dl'}> does not exist, and so is not true.
                                      ~comment ~literal
                                      ~declaration ~pi
                                     );
- # The "~"-initial names are for pseudo-elements used by HTML::Entities
- #  and TreeBuilder
+# The "~"-initial names are for pseudo-elements used by HTML::Entities
+#  and TreeBuilder
 
-#---------------------------------------------------------------------------
-
-=item hashset %HTML::Tagset::optionalEndTag
+=head2 hashset %HTML::Tagset::optionalEndTag
 
 This hashset lists tag-names for elements that can have content, but whose
 end-tags are generally, "safely", omissible.  Example:
@@ -74,14 +82,11 @@ C<$HTML::Tagset::emptyElement{'li'}> exists and is true.
 
 %optionalEndTag = map {; $_ => 1 } qw(p li dt dd); # option th tr td);
 
-#---------------------------------------------------------------------------
-
-=item hash %HTML::Tagset::linkElements
+=head2 hash %HTML::Tagset::linkElements
 
 Values in this hash are tagnames for elements that might contain
 links, and the value for each is a reference to an array of the names
 of attributes whose values can be links.
-
 
 =cut
 
@@ -117,9 +122,7 @@ of attributes whose values can be links.
  'xmp'     => ['href'],
 );
 
-#---------------------------------------------------------------------------
-
-=item hash %HTML::Tagset::boolean_attr
+=head2 hash %HTML::Tagset::boolean_attr
 
 This hash (not hashset) lists what attributes of what elements can be
 printed without showing the value (for example, the "noshade" attribute
@@ -168,7 +171,7 @@ the value is a reference to a hashset containing all such attributes.
 #     marquee??  app??  (both unimplemented)
 #==========================================================================
 
-=item hashset %HTML::Tagset::isPhraseMarkup
+=head2 hashset %HTML::Tagset::isPhraseMarkup
 
 This hashset contains all phrasal-level elements.
 
@@ -185,7 +188,7 @@ This hashset contains all phrasal-level elements.
 );  # had: center, hr, table
 
 
-=item hashset %HTML::Tagset::is_Possible_Strict_P_Content
+=head2 hashset %HTML::Tagset::is_Possible_Strict_P_Content
 
 This hashset contains all phrasal-level elements that be content of a
 P element, for a strict model of HTML.
@@ -214,7 +217,7 @@ P element, for a strict model of HTML.
 #<!-- %inline; covers inline or "text-level" elements -->
 #<!ENTITY % inline "#PCDATA | %fontstyle; | %phrase; | %special; | %formctrl;">
 
-=item hashset %HTML::Tagset::isHeadElement
+=head2 hashset %HTML::Tagset::isHeadElement
 
 This hashset contains all elements that elements that should be
 present only in the 'head' element of an HTML document.
@@ -224,7 +227,7 @@ present only in the 'head' element of an HTML document.
 %isHeadElement = map {; $_ => 1 }
  qw(title base link meta isindex script style object bgsound);
 
-=item hashset %HTML::Tagset::isList
+=head2 hashset %HTML::Tagset::isList
 
 This hashset contains all elements that can contain "li" elements.
 
@@ -232,7 +235,7 @@ This hashset contains all elements that can contain "li" elements.
 
 %isList         = map {; $_ => 1 } qw(ul ol dir menu);
 
-=item hashset %HTML::Tagset::isTableElement
+=head2 hashset %HTML::Tagset::isTableElement
 
 This hashset contains all elements that are to be found only in/under
 a "table" element.
@@ -242,7 +245,7 @@ a "table" element.
 %isTableElement = map {; $_ => 1 }
  qw(tr td th thead tbody tfoot caption col colgroup);
 
-=item hashset %HTML::Tagset::isFormElement
+=head2 hashset %HTML::Tagset::isFormElement
 
 This hashset contains all elements that are to be found only in/under
 a "form" element.
@@ -252,7 +255,7 @@ a "form" element.
 %isFormElement  = map {; $_ => 1 }
  qw(input select option optgroup textarea button label);
 
-=item hashset %HTML::Tagset::isBodyMarkup
+=head2 hashset %HTML::Tagset::isBodyMarkup
 
 This hashset contains all elements that are to be found only in/under
 the "body" element of an HTML document.
@@ -289,7 +292,7 @@ the "body" element of an HTML document.
 ;
 
 
-=item hashset %HTML::Tagset::isHeadOrBodyElement
+=head2 hashset %HTML::Tagset::isHeadOrBodyElement
 
 This hashset includes all elements that I notice can fall either in
 the head or in the body.
@@ -301,7 +304,7 @@ the head or in the body.
   # i.e., if we find 'script' in the 'body' or the 'head', don't freak out.
 
 
-=item hashset %HTML::Tagset::isKnown
+=head2 hashset %HTML::Tagset::isKnown
 
 This hashset lists all known HTML elements.
 
@@ -316,7 +319,7 @@ This hashset lists all known HTML elements.
  # that should be all known tags ever ever
 
 
-=item hashset %HTML::Tagset::canTighten
+=head2 hashset %HTML::Tagset::canTighten
 
 This hashset lists elements that might have ignorable whitespace as
 children or siblings.
@@ -340,7 +343,7 @@ delete @canTighten{
 
 #==========================================================================
 
-=item array @HTML::Tagset::p_closure_barriers
+=head2 array @HTML::Tagset::p_closure_barriers
 
 This array has a meaning that I have only seen a need for in
 C<HTML::TreeBuilder>, but I include it here on the off chance that someone
@@ -393,9 +396,7 @@ barrier-tags.
 # In an ideal world (i.e., XHTML) we wouldn't have to bother with any of this
 # monkey business of barriers to minimization!
 
-###########################################################################
-
-=item hashset %isCDATA_Parent
+=head2 hashset %isCDATA_Parent
 
 This hashset includes all elements whose content is CDATA.
 
@@ -412,11 +413,6 @@ This hashset includes all elements whose content is CDATA.
 #   standard parsers and will cause problems for processing
 #   documents with standard SGML tools.
 
-
-
-###########################################################################
-
-=back
 
 =head1 CAVEATS
 
@@ -440,20 +436,34 @@ the data tables in this document.
 
 L<HTML::Element>, L<HTML::TreeBuilder>, L<HTML::LinkExtor>
 
-=head1 COPYRIGHT
+=head1 COPYRIGHT & LICENSE
 
-Copyright 1995-2000 Gisle Aas; copyright 2000 Sean M. Burke.
+Copyright 1995-2000 Gisle Aas.
 
-This library is free software; you can redistribute it and/or
-modify it under the same terms as Perl itself.
+Copyright 2000-2005 Sean M. Burke.
+
+Copyright 2005 Andy Lester.
+
+This program is free software; you can redistribute it and/or modify it
+under the same terms as Perl itself.
+
+=head1 ACKNOWLEDGEMENTS
+
+Most of the code/data in this module was adapted from code written
+by Gisle Aas for C<HTML::Element>, C<HTML::TreeBuilder>, and
+C<HTML::LinkExtor>.  Then it was maintained by Sean M. Burke.
 
 =head1 AUTHOR
 
-Current maintainer: Sean M. Burke, E<lt>sburke@cpan.orgE<gt>
+Current maintainer: Andy Lester, C<< <andy at petdance.com> >>
 
-Most of the code/data in this module was adapted from code written by
-Gisle Aas E<lt>gisle@aas.noE<gt> for C<HTML::Element>,
-C<HTML::TreeBuilder>, and C<HTML::LinkExtor>.
+=head1 BUGS
+
+Please report any bugs or feature requests to
+C<bug-html-tagset at rt.cpan.org>, or through the web interface at
+L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=HTML-Tagset>.  I will
+be notified, and then you'll automatically be notified of progress on
+your bug as I make changes.
 
 =cut
 
