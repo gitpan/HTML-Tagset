@@ -8,13 +8,13 @@ HTML::Tagset - data tables useful in parsing HTML
 
 =head1 VERSION
 
-Version 3.10
+Version 3.20
 
 =cut
 
 use vars qw( $VERSION );
 
-$VERSION = '3.10';
+$VERSION = '3.20';
 
 =head1 SYNOPSIS
 
@@ -391,6 +391,7 @@ barrier-tags.
   ul ol menu dir
   dl dt dd
   td th tr table caption
+  div
  );
 
 # In an ideal world (i.e., XHTML) we wouldn't have to bother with any of this
@@ -442,7 +443,7 @@ Copyright 1995-2000 Gisle Aas.
 
 Copyright 2000-2005 Sean M. Burke.
 
-Copyright 2005 Andy Lester.
+Copyright 2005-2008 Andy Lester.
 
 This program is free software; you can redistribute it and/or modify it
 under the same terms as Perl itself.
